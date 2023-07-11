@@ -1,0 +1,417 @@
+@use "./variables" as *;
+@use "./mixins" as *;
+
+#blurredContainer {
+  filter: blur(7px);
+  -webkit-filter: blur(7px);
+}
+.filterAndControls {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 5;
+  .openFilter {
+    background: transparent;
+    border: none;
+    margin: 5px 20px 0 0;
+    i {
+      color: $black;
+      font-size: 4.5rem;
+    }
+  }
+  .filterPopOut {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background: $red;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    z-index: 4;
+    position: fixed;
+    top: 0;
+    right: 0;
+    border-left: 1px solid $ash;
+    animation: 0.15s dashboardSlide linear;
+    .filterTop {
+      height: 10%;
+      padding: 15px;
+      margin: 10px 0 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .filterLogo {
+        display: flex;
+        flex-direction: column;
+        a {
+          h2 {
+            transition: 0.9s;
+            color: $white;
+            font-family: $bold;
+            font-size: 4rem;
+            &:hover {
+              color: $yellow;
+            }
+          }
+        }
+      }
+      .filterClose {
+        .hamburgerX {
+          font-size: 3.75rem;
+          z-index: 5;
+          background: transparent;
+          border: none;
+          color: $white;
+          margin: 0;
+          opacity: 0;
+          animation: 0.2s linear forwards openMobile;
+        }
+      }
+    }
+    .mobileFilterContainer {
+      height: 90%;
+      overflow-y: scroll;
+      .filterButtons {
+        display: flex;
+        flex-direction: column;
+        padding: 20px 10px 5px;
+        button {
+          height: 80px;
+          margin: 20px 0;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          background-color: transparent;
+          border: none;
+          .buttonText {
+            color: $white;
+            font-size: 3rem;
+            padding: 15px;
+          }
+          i {
+            font-size: 3rem;
+            padding: 15px;
+            color: $white;
+          }
+        }
+        form {
+          height: 80px;
+          margin: 20px 0;
+          display: flex;
+          align-items: center;
+          input {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid $white;
+            border-radius: 0px;
+            width: 70%;
+            color: $white;
+            font-size: 2rem;
+            &::placeholder {
+              color: transparent;
+              margin: 0;
+              padding: 0;
+              font-size: 2rem;
+            }
+          }
+        }
+        .buttonValues {
+          align-self: flex-start;
+          margin-left: 50px;
+          button {
+            height: 20px;
+            font-size: 2.5rem;
+            color: $white;
+            text-align: center;
+            margin: 25px auto;
+            padding-bottom: 10px;
+          }
+        }
+      }
+    }
+  }
+}
+.searchNav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin-top: 15px;
+  width: 300px;
+  @include smallDesktop {
+    width: 250px;
+  }
+  z-index: 4;
+  .searchNavContents {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    .infoForm {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      padding-right: 80px;
+      margin-top: 20px;
+      @include mobileLarge {
+        flex-direction: column-reverse;
+        align-items: flex-end;
+        margin-top: 5px;
+      }
+      .infoSearch {
+        width: 70%;
+        font-size: 2rem;
+        padding: 15px;
+        background: $white;
+        @include tablet {
+          width: 50%;
+        }
+        @include mobileLarge {
+          visibility: hidden;
+        }
+      }
+      .searchButton {
+        width: 25%;
+        background-color: $yellow;
+        border-radius: 0 5px 5px 0;
+        &:hover {
+          background-color: $darkYellow;
+        }
+        i {
+          font-size: 1.5rem;
+          color: $black;
+        }
+        @include mobileLarge {
+          border-radius: 5px;
+          visibility: hidden;
+        }
+      }
+    }
+  }
+}
+
+.resultsContainer {
+  overflow: hidden;
+  .badResponse {
+    height: 100vh;
+    width: calc(100vw - 350px);
+    display: flex;
+    justify-content: center;
+  }
+  .badResponseContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    width: 35%;
+    opacity: 0;
+    animation: showUp 3s linear 1 normal forwards;
+    button {
+      width: 150px;
+      padding: 10px 0;
+      margin: 15px 0;
+      background: $yellow;
+      color: $black;
+      border-radius: 5px;
+      font-size: 2rem;
+      &:hover {
+        background: $white;
+      }
+    }
+  }
+  .badSearch {
+    height: 100vh;
+    width: calc(100vw - 350px);
+    display: flex;
+    justify-content: center;
+  }
+  .badSearchContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    width: 35%;
+    h2 {
+      color: $white;
+    }
+    .genreSuggestion {
+      text-transform: capitalize;
+      color: $yellow;
+    }
+  }
+  .savedToFavPopUp {
+    position: fixed;
+    bottom: 0%;
+    right: 50%;
+    margin-bottom: 100px;
+    transform: translate(50%, 50%);
+    z-index: 2;
+    .popupContainer {
+      background: $ash;
+      border-radius: 10px;
+      opacity: 0;
+      h3 {
+        font-size: 2rem;
+        padding: 20px;
+        color: $white;
+      }
+      #favTitle {
+        color: $yellow;
+      }
+    }
+    #savedPopup {
+      animation: 2s favFade linear;
+      z-index: 100;
+    }
+    @include tablet {
+      transform: translate(50%, 35%);
+    }
+  }
+  .mobileAlert {
+    z-index: 10;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: $red;
+    border: 2px solid $black;
+    border-radius: 10px;
+    .mobileAlertContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      width: 80vw;
+      .mobileAlertClose {
+        margin: 15px;
+        button {
+          background: $yellow;
+          color: $black;
+          font-size: 2rem;
+          border-radius: 5px;
+          padding: 10px 17.5px;
+        }
+      }
+      .mobileAlertText {
+        padding: 35px 20px 0px;
+        p {
+          font-size: 2rem;
+          color: $white;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+.radioView {
+  display: flex;
+  width: 100vw;
+  position: relative;
+  .resultsContainer {
+    width: 100%;
+    height: 100vh;
+    overflow-y: hidden;
+    @include mobileLarge {
+      width: 100vw;
+      height: 100vh;
+    }
+  }
+}
+
+.loginModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  background: transparent;
+  .loginModalContainer {
+    width: 54vw;
+    height: 65vh;
+    background: $red;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 70px;
+    position: relative;
+    transform: scale(0.8);
+    @include mobileLarge {
+      width: 100%;
+    }
+    .closeModalButton {
+      position: absolute;
+      top: 0;
+      align-self: flex-end;
+      margin: 25px 65px 0 0;
+      background: transparent;
+      border: none;
+      @include mobileLarge {
+        margin: -15px 25px 0 0;
+      }
+    }
+    .closeModal {
+      font-size: 3rem;
+      color: $white;
+      @include mobileLarge {
+        font-size: 4rem;
+      }
+    }
+  }
+}
+
+///////////////////// animations
+
+@keyframes showUp {
+  0% {
+    opacity: 0;
+  }
+  98% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes favFade {
+  0% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  85% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+}
+
+@keyframes dashboardSlide {
+  0% {
+    right: -450px;
+  }
+  99% {
+  }
+  100% {
+    right: 0px;
+  }
+}

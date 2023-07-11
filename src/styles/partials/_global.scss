@@ -1,0 +1,116 @@
+@use "./variables" as *;
+
+html {
+  overflow-x: hidden;
+  font-family: $font;
+  font-size: 62.5%;
+  scrollbar-width: thin;
+  scrollbar-color: $grey transparent;
+  background: $red;
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background: white;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: red;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: purple;
+  }
+}
+
+body {
+  background: $red;
+}
+
+.wrapper {
+  max-width: 1728px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+button {
+  cursor: pointer;
+  font-size: clamp(0.9375rem, 0.865rem + 0.3623vw, 1.25rem);
+  transition: 0.3s;
+  padding: 5px 2px;
+  border: 2px solid $ash;
+  text-align: center;
+  transition: opacity 0.6s ease-in-out;
+}
+
+input {
+  width: 100%;
+  border: 2px solid $black;
+  background: $white;
+  color: $black;
+  border-right: none;
+  padding: 30px;
+  height: 25px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  font-size: 1rem;
+  touch-action: manipulation;
+  user-select: text;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  -webkit-user-select: auto !important;
+  -khtml-user-select: auto !important;
+  -moz-user-select: auto !important;
+  -o-user-select: auto !important;
+  -ms-user-select: auto !important;
+  user-select: auto !important;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
+}
+
+.dropdown {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  // border: 1px solid $black;
+  border-bottom: none;
+  border-radius: 5px;
+  &:last-child {
+    border-bottom: 1px solid $black;
+    border-top: none;
+  }
+}
+
+.dropdown:empty {
+  border: none;
+}
+.dropdownRow {
+  cursor: pointer;
+  text-align: start;
+  background: $white;
+  border: 1px solid $black;
+  &:last-of-type {
+    border-radius: 0 0 5px 5px;
+  }
+  p {
+    color: $black;
+    margin: 5px;
+  }
+  &:hover {
+    background: $grey;
+    p {
+      color: $black;
+    }
+  }
+}
+
+.leaflet-popup-close-button {
+  margin: 2.5px 0 2.5px 2.5px;
+  font: 28px/24px Tahoma, Verdana, sans-serif;
+}

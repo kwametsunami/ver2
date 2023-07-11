@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1.0, shrink-to-fit=no"
+    />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="tr-1.fm"
+      content="An application that gathers stations around the world"
+    />
+    <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+      integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+      integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+      crossorigin=""
+    ></script>
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <!-- font awesome script -->
+    <script
+      src="https://kit.fontawesome.com/3ac14fc81f.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <title>tr-1.fm</title>
+    <style>
+      body {
+        background: #d32631;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .preload {
+        margin-top: 250px;
+        display: flex;
+        flex-direction: column;
+        color: #ffffff;
+      }
+      .preloadText {
+        text-align: center;
+        margin-top: 0;
+      }
+      h2 {
+        position: relative;
+        color: #f7f5ea;
+        font-size: 5em;
+        font-family: "futura";
+        font-weight: 200;
+        font-size: 35px;
+      }
+      h2:before {
+        content: attr(data-text);
+        position: absolute;
+        overflow: hidden;
+        max-width: 7em;
+        white-space: nowrap;
+        color: #edd05f;
+        animation: loading 3s linear;
+      }
+      @keyframes loading {
+        0% {
+          max-width: 0;
+        }
+      }
+      .turntable {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #d32631;
+      }
+      .plinth {
+        background: #e1e1e1;
+        width: 300px;
+        height: 200px;
+        border-radius: 5px;
+        border: 5px solid #1a1a1a;
+        display: flex;
+        align-items: center;
+        position: relative;
+        opacity: 0;
+        animation: 0.9s linear forwards fadeIn;
+      }
+      .adapter {
+        width: 25px;
+        height: 25px;
+        background: grey;
+        border-radius: 25px;
+        position: absolute;
+        top: 17.5px;
+        left: 8.5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        animation: 0.4s linear 0.9s forwards fadeIn;
+      }
+      .innerAdapter {
+        width: 7px;
+        height: 7px;
+        background: black;
+        border-radius: 10px;
+      }
+      .strobe {
+        height: 20px;
+        width: 20px;
+        background: black;
+        border: 2px solid #c1c1c1;
+        border-radius: 20px;
+        position: absolute;
+        bottom: 40px;
+        left: 5px;
+        opacity: 0;
+        animation: 0.8s linear 1.2s forwards fadeIn;
+      }
+      .start {
+        width: 30px;
+        height: 20px;
+        background: #eaeaea;
+        border: 4px inset #191919;
+        position: absolute;
+        bottom: 10px;
+        left: 5px;
+        opacity: 0;
+        animation: 0.7s linear 1.35s forwards fadeIn;
+      }
+      .speedButton {
+        height: 5px;
+        width: 20px;
+        background: black;
+        position: absolute;
+        bottom: 15px;
+        left: 45px;
+        display: flex;
+        opacity: 0;
+        animation: 0.6s linear 1.3s forwards fadeIn;
+      }
+      .thirtyThree {
+        width: 10px;
+        height: 5px;
+        background: #fff;
+        border: 1px solid #000;
+        opacity: 0;
+        animation: 0.4s linear 1.1s forwards fadeIn;
+      }
+      .fortyFour {
+        width: 10px;
+        height: 5px;
+        background: #fff;
+        border: 1px solid #000;
+        opacity: 0;
+        animation: 0.4s linear 1.2s forwards fadeIn;
+      }
+      .platterContainer {
+        width: 225px;
+        height: 180px;
+        background: #e1e1e1;
+        opacity: 1;
+      }
+      .platter {
+        width: 170px;
+        height: 170px;
+        border-radius: 180px;
+        border: 5px solid grey;
+        background: #3383ff;
+        margin: 0 auto;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        animation: 0.5s linear 0.2s forwards fadeIn;
+      }
+      .record {
+        width: 160px;
+        height: 160px;
+        border-radius: 160px;
+        background: #191919;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: rotate(0deg);
+        animation-name: fadeIn, nowPlaying;
+        animation-duration: 0.3s, 2s;
+        animation-delay: 0.3s, 0.3s;
+        animation-timing-function: linear, linear;
+        animation-iteration-count: 1, infinite;
+        animation-fill-mode: forwards, none;
+        opacity: 0;
+      }
+      .grooveLine {
+        height: 135px;
+        width: 135px;
+        border-radius: 135px;
+        background: #191919;
+        border: 2px double #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .grooveInner {
+        height: 100px;
+        width: 100px;
+        background: #191919;
+        border: 2px double #000;
+        border-radius: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .innerGroove {
+        height: 80px;
+        width: 80px;
+        background: black;
+        border-radius: 50px;
+      }
+      .label {
+        width: 60px;
+        height: 60px;
+        border-radius: 50px;
+        background: #000;
+        display: flex;
+        position: absolute;
+      }
+      .labelL {
+        width: 30px;
+        height: 60px;
+        border-radius: 60px 0 0 60px;
+        background: yellow;
+      }
+      .labelR {
+        width: 30px;
+        height: 60px;
+        border-radius: 0 60px 60px 0;
+        background: green;
+      }
+      .spindle {
+        width: 10px;
+        height: 10px;
+        border-radius: 10px;
+        background: #b7b7b7;
+        border: 1px double #6d6d6d;
+        position: absolute;
+      }
+      .rightSide {
+        width: 75px;
+        height: 180px;
+        background: #e1e1e1;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        z-index: 1;
+      }
+      .arm {
+        height: 75px;
+        width: 10px;
+        position: relative;
+        background: #9d9b9b;
+        margin: 0 auto;
+        border-radius: 0 0 0 50px;
+        transform-origin: top right 100%;
+        transform: translateX(-25px) translateY(15px) rotate(45deg);
+        animation: 0.3s linear 0.6s forwards fadeIn;
+        opacity: 0;
+      }
+      .armBase {
+        height: 45px;
+        width: 45px;
+        border-radius: 100%;
+        background: #9d9b9b;
+        z-index: -1;
+        position: absolute;
+        top: 12.5px;
+        left: 4.5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .innerBase {
+        height: 35px;
+        width: 35px;
+        border-radius: 35px;
+        background: black;
+      }
+      .counterWeight {
+        height: 25px;
+        width: 25px;
+        border-radius: 2px;
+        background: #dddddd;
+        border-top: 5px solid #222222;
+        border-bottom: 4px solid #222222;
+        position: absolute;
+        left: -7px;
+        top: -12.5px;
+      }
+      .armBend {
+        height: 40px;
+        width: 10px;
+        border-radius: 50px 0 50px 0;
+        transform: rotate(-20deg);
+        background: #9d9b9b;
+        position: absolute;
+        bottom: -25px;
+        right: -5px;
+      }
+      .armBendTwo {
+        height: 40px;
+        width: 10px;
+        border-radius: 50px 50px 0 0;
+        transform: rotate(5deg);
+        background: #9d9b9b;
+        position: absolute;
+        bottom: -55px;
+        right: -8px;
+      }
+      .cartridge {
+        width: 16.5px;
+        height: 25px;
+        background: #000;
+        position: absolute;
+        bottom: -75px;
+        right: -9px;
+        transform: rotate(7deg);
+      }
+      .lift {
+        height: 5px;
+        width: 12.5px;
+        background: #fff;
+        position: absolute;
+        right: -10px;
+        top: 9px;
+      }
+      .controls {
+        height: 80px;
+        width: 25px;
+        background: #dddddd;
+        border: 4px inset rgba(123, 123, 123, 0.867);
+        border-radius: 5px;
+        bottom: 10px;
+        left: 25px;
+        margin: 0 auto;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        animation: 0.3s linear 1s forwards fadeIn;
+        opacity: 0;
+      }
+      .speed {
+        height: 70px;
+        width: 5px;
+        background: rgb(91, 91, 91);
+        margin: 0 auto;
+      }
+      .lever {
+        height: 10px;
+        width: 14.5px;
+        background: #212121;
+        border: 2px solid #000;
+        position: absolute;
+        left: 1.5px;
+        top: 35px;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 100;
+        }
+      }
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes scale {
+        from {
+          transform: scale(1);
+        }
+        to {
+          transform: scale(1.5);
+        }
+      }
+
+      @keyframes slideL {
+        from {
+          transform: translateX(60px);
+        }
+        to {
+          transform: translateX(50px);
+        }
+      }
+
+      @keyframes slideR {
+        from {
+          transform: translateX(-105px);
+        }
+        to {
+          transform: translateX(-115px);
+        }
+      }
+
+      @keyframes upDown {
+        0% {
+          transform: translateY(0px);
+        }
+        20% {
+          transform: translateY(-8px);
+        }
+        60% {
+          transform: translateY(8px);
+        }
+        90% {
+          transform: translateY(-2.5px);
+        }
+      }
+
+      @keyframes playing {
+        0% {
+          background: #ffffff;
+          transform: translateY(0px);
+        }
+        4% {
+          background: #ffed24;
+          transform: translateY(2px);
+        }
+        6% {
+          background: #ffffff;
+          transform: translateY(0px);
+        }
+      }
+
+      @keyframes playingB {
+        0% {
+          background: #191919;
+          transform: translateY(12.5px);
+        }
+        4% {
+          background: #fd4602;
+          transform: translateY(14.5px);
+        }
+        6% {
+          background: #191919;
+          transform: translateY(12.5px);
+        }
+      }
+
+      @keyframes ghostLow {
+        0% {
+          height: 150px;
+        }
+        35% {
+          height: 185px;
+        }
+        65% {
+          height: 145px;
+        }
+        80% {
+          height: 160px;
+        }
+      }
+
+      @keyframes ghostHigh {
+        0% {
+          height: 250px;
+        }
+        35% {
+          height: 265px;
+        }
+        60% {
+          height: 240px;
+        }
+        85% {
+          height: 260px;
+        }
+      }
+
+      @keyframes ghostScaleL {
+        from {
+          transform: scale(1);
+          background: #a81a40;
+        }
+        to {
+          transform: scale(1.1);
+          background: #71011f;
+        }
+      }
+
+      @keyframes ghostScaleH {
+        from {
+          transform: scale(1);
+          background: #ffed24;
+        }
+        to {
+          transform: scale(1.15);
+          background: #ed9f0e;
+        }
+      }
+
+      @keyframes blueDot {
+        0% {
+          transform: scale(1);
+        }
+        75% {
+          transform: scale(1.75);
+        }
+        80% {
+          transform: scale(0);
+        }
+      }
+
+      @keyframes bSq {
+        0% {
+          transform: translateY(0px) rotate(45deg);
+        }
+        20% {
+          transform: translateY(-8px) rotate(45deg);
+        }
+        60% {
+          transform: translateY(8px) rotate(55deg);
+        }
+        85% {
+          transform: translateY(0px) rotate(0deg);
+        }
+      }
+
+      @keyframes sSq {
+        0% {
+          background: #e1f0f1;
+          transform: scale(1);
+          border: 0px solid #e1f0f1;
+          border-radius: 0px;
+        }
+        90% {
+          background: #101010;
+          transform: scale(1.1);
+          border: 5px solid #e1f0f1;
+          border-radius: 10px;
+        }
+        100% {
+          background: #e1f0f1;
+          transform: scale(1);
+          border: 0px solid #e1f0f1;
+          border-radius: 0px;
+        }
+      }
+
+      @keyframes thump {
+        0% {
+          transform: scale(1);
+        }
+        20% {
+          transform: scale(1);
+        }
+        22% {
+          transform: scale(1.1);
+        }
+        24% {
+          transform: scale(1);
+        }
+        30% {
+          transform: scale(1);
+        }
+        32% {
+          transform: scale(1.1);
+        }
+        34% {
+          transform: scale(1);
+        }
+      }
+
+      @keyframes nowPlaying {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(359deg);
+        }
+      }
+
+      @keyframes riding {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(-359deg);
+        }
+      }
+
+      @keyframes spindleBack {
+        0% {
+          transform: translateX(199px) translateY(62px) rotate(0deg);
+        }
+        100% {
+          transform: translateX(199px) translateY(62px) rotate(-359deg);
+        }
+      }
+
+      @keyframes truckBounce {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-3px);
+        }
+        100% {
+          transform: translateY(-1px);
+        }
+      }
+
+      @keyframes tireBounce {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(3px);
+        }
+        100% {
+          transform: translateY(1px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root">
+      <div class="preload">
+        <section class="turntable">
+          <div class="plinth">
+            <div class="start"></div>
+            <div class="strobe"></div>
+            <div class="adapter">
+              <div class="innerAdapter"></div>
+            </div>
+            <div class="speedButton">
+              <div class="thirtyThree"></div>
+              <div class="fortyFour"></div>
+            </div>
+            <div class="platterContainer">
+              <div class="platter">
+                <div class="record">
+                  <div class="grooveLine">
+                    <div class="grooveInner">
+                      <div class="innerGroove"></div>
+                    </div>
+                  </div>
+                  <div class="label">
+                    <div class="labelL"></div>
+                    <div class="labelR"></div>
+                  </div>
+                </div>
+                <div class="spindle"></div>
+              </div>
+            </div>
+            <div class="rightSide">
+              <div class="armBase">
+                <div class="innerBase"></div>
+              </div>
+              <div class="arm">
+                <div class="counterWeight"></div>
+                <div class="armBend"></div>
+                <div class="armBendTwo"></div>
+                <div class="cartridge">
+                  <div class="lift"></div>
+                </div>
+              </div>
+              <div class="controls">
+                <div class="speed">
+                  <div class="lever"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="preloadText">
+          <h2 data-text="loading…" class="preloadFont">loading...</h2>
+        </section>
+      </div>
+    </div>
+  </body>
+</html>

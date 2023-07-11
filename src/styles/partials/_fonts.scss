@@ -1,0 +1,55 @@
+@use "variables" as *;
+
+@font-face {
+  font-family: "Jost";
+  font-weight: normal;
+  src: url("../../fonts/Jost/static/Jost-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Jost Bold";
+  font-weight: bold;
+  src: url("../../fonts/Jost/static/Jost-SemiBold.ttf");
+}
+
+@font-face {
+  font-family: "Jost Italic";
+  font-weight: bold;
+  src: url("../../fonts/Jost/static/Jost-SemiBoldItalic.ttf");
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+button,
+input,
+select,
+option {
+  font-family: $font;
+  color: $yellow;
+}
+
+h1 {
+  font-size: clamp(5.3125rem, 4.375rem + 4.6875vw, 15.625rem);
+  margin: 0;
+}
+h2 {
+  font-size: clamp(1.25rem, 1.0227rem + 1.1364vw, 3.75rem);
+  margin: 0;
+}
+
+p {
+  font-size: clamp(0.75rem, 0.6477rem + 0.5114vw, 1.875rem);
+}
+
+a {
+  text-decoration: none;
+  &:visited {
+    color: black;
+  }
+}

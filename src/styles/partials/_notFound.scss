@@ -1,0 +1,33 @@
+@use "./variables" as *;
+
+.danceParty {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  background-image: url(../../assets/clubBackground.jpg);
+  background-size: 100vw 100vh;
+  .dancePartyContainer {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    overflow-y: hidden;
+  }
+  h3 {
+    font-size: 5rem;
+    color: $white;
+    text-shadow: -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000, 0.5px -0.5px 0 #000,
+      -0.5px -0.5px 0 #000;
+    a {
+      color: $white;
+      text-decoration: underline;
+    }
+  }
+  .danceBuddies {
+    margin-top: 150px;
+    img {
+      width: 150px;
+    }
+  }
+}

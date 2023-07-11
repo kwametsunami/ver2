@@ -1,0 +1,57 @@
+.leaflet-container {
+  width: 70vw;
+  height: 70vh;
+}
+
+.searchContainer {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  width: 220px;
+}
+
+.dropdown {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid gray;
+}
+
+.dropdown:empty {
+  border: none;
+}
+
+.dropdownRow {
+  cursor: pointer;
+  text-align: start;
+  text-transform: capitalize;
+}
+.dropdownRow:hover {
+  background: grey;
+}
+
+.searchInner {
+  display: flex;
+}
+
+.icon {
+  width: 50px;
+  height: 50px;
+}
+
+.audio-visualizer {
+  display: flex;
+  align-items: flex-end;
+  height: 100px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.audio-bar {
+  width: 2px;
+  background-color: #fff;
+  margin-right: 2px;
+}/*# sourceMappingURL=App.css.map */

@@ -1,0 +1,700 @@
+@use "./variables" as *;
+@use "./mixins" as *;
+
+.stationList {
+  height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  .listFilters {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    @include mobileLarge {
+      visibility: hidden;
+      display: flex;
+      justify-content: center;
+      left: 0;
+      width: 100vw;
+      margin-top: 20px;
+    }
+    .textLoading {
+      margin: 55px 0 25px;
+    }
+    .returned {
+      font-size: clamp(1.25rem, 1.0909rem + 0.7955vw, 3rem);
+      color: $eggshell;
+      @include mobileLarge {
+        visibility: visible;
+        margin: 0 auto;
+        width: 200px;
+        word-wrap: break-word;
+        font-size: 2rem;
+        text-align: center;
+      }
+      #amountReturned,
+      #listSearchTerm {
+        font-family: $bold;
+        color: $brightWhite;
+      }
+    }
+    .topControls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 70%;
+      margin-bottom: 10px;
+      @include mobile {
+        justify-content: center;
+      }
+      .filterButtonContainer {
+        @include mobile {
+          margin: 5px;
+        }
+        .randomStation {
+          width: 50px;
+          padding: 10px 10px;
+          border-radius: 5px 0 0 5px;
+          border-right: 0.5px solid $black;
+          @include mobile {
+            width: 42.5px;
+            padding: 7.5px 7.5px;
+          }
+          i {
+            font-size: clamp(1.125rem, 1.0227rem + 0.5114vw, 2.25rem);
+            color: $red;
+          }
+          &:hover {
+            background: $grey;
+          }
+        }
+        .mapViewButton {
+          width: 50px;
+          padding: 10px 10px;
+          border-radius: 0 5px 5px 0;
+          border-left: 0.5px solid $black;
+          @include mobile {
+            width: 42.5px;
+            padding: 7.5px 7.5px;
+          }
+          i {
+            font-size: clamp(1.125rem, 1.0227rem + 0.5114vw, 2.25rem);
+            color: $red;
+          }
+          &:hover {
+            background: $grey;
+          }
+        }
+      }
+      .selectDropdown {
+        @include mobile {
+          padding: 10px 0;
+        }
+        select {
+          padding: 10px 10px;
+          font-size: clamp(0.625rem, 0.5455rem + 0.3977vw, 1.5rem);
+          color: $black !important;
+          border: 2px solid $ash;
+          border-radius: 5px;
+          @include mobile {
+            width: 85px;
+            padding: 9px 9px;
+          }
+        }
+      }
+    }
+  }
+  .stationListContainer {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 55px;
+    .stationInfoList {
+      display: flex;
+      position: relative;
+      justify-content: center;
+      width: calc((80% / 2) - 30px);
+      max-height: 150px;
+      margin: 12.5px;
+      border: 2.5px solid $black;
+      border-radius: 20px;
+      background-color: #ebe7e7;
+      transition: 0.2s;
+      @include tablet {
+        width: calc((85% / 2) - 25px);
+      }
+      @include mobileLarge {
+        width: 100%;
+        height: 100px;
+        margin: 5px 10px;
+        background: transparent;
+        border: none;
+        border-radius: 0px;
+      }
+      &:hover {
+        background-color: $grey;
+        .imageInfoContainer {
+          .buttonContainer {
+            .favourite {
+              i {
+                color: transparent;
+                -webkit-text-stroke-width: 1px;
+                -webkit-text-stroke-color: $black;
+                @include tablet {
+                  color: $white;
+                  -webkit-text-stroke-width: 0px;
+                }
+              }
+            }
+          }
+        }
+        @include tablet {
+          background-color: transparent;
+        }
+      }
+      .playButtonDiv {
+        background: transparent;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+      .imageInfoContainer {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 5px;
+        .information {
+          width: 50%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          @include tablet {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+          }
+          .stationName {
+            font-family: $bold;
+          }
+          .stationCountry {
+            text-transform: capitalize;
+            margin: 0;
+            padding-bottom: 10px;
+          }
+          p {
+            font-size: clamp(0.75rem, 0.6705rem + 0.3977vw, 1.625rem);
+            color: $black;
+            @include mobileLarge {
+              color: $white;
+              font-size: 1rem;
+            }
+          }
+        }
+        .imageList {
+          width: 25%;
+          margin: 0 15px;
+          display: flex;
+          align-content: center;
+          justify-content: center;
+          position: relative;
+          .icon {
+            margin: auto 0;
+            width: 70px;
+            height: auto;
+            max-height: 70px;
+            border-radius: 10px;
+            padding: 5px;
+            @include smallDesktop {
+              width: 50px;
+              height: auto;
+              max-height: 50px;
+            }
+            @include tablet {
+              width: 35px;
+              height: auto;
+              max-height: 35px;
+              font-size: 0.7rem;
+            }
+            @include mobileLarge {
+              width: 75px;
+              height: 75px;
+              max-height: 75px;
+            }
+          }
+          .blurred {
+            filter: blur(3px);
+            -webkit-filter: blur(3px);
+          }
+          .hoverPlay {
+            position: absolute;
+            margin: 0 auto;
+            align-self: center;
+            width: 50px;
+            height: 50px;
+            border: none;
+            padding: 5px;
+            background: transparent;
+            i {
+              color: $red;
+              font-size: 2rem;
+              text-shadow: -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000,
+                0.5px -0.5px 0 #000, -0.5px -0.5px 0 #000;
+              @include tablet {
+                font-size: 1.5rem;
+              }
+              @include mobileLarge {
+                font-size: 1rem;
+              }
+            }
+            &:hover {
+              i {
+                transform: scale(1.15);
+                transition: 0.2s;
+              }
+            }
+          }
+        }
+        .buttonContainer {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .infoButton {
+            width: 45px;
+            height: 45px;
+            border: 2px solid #1e2021;
+            border-radius: 50px;
+            color: $red;
+            background-color: $white;
+            margin: 2px 5px;
+            &:hover {
+              transform: scale(1.05);
+            }
+            @include smallDesktop {
+              width: 30px;
+              height: 30px;
+            }
+            @include tablet {
+              width: 25px;
+              height: 25px;
+            }
+            @include mobileLarge {
+              width: 20px;
+              height: 20px;
+              font-size: 0.7rem;
+            }
+          }
+          .favourite {
+            width: 45px;
+            height: 45px;
+            margin: 2px 5px;
+            border: none;
+            background-color: transparent;
+            z-index: 1;
+            transition: 0.2s;
+            &:hover {
+              transform: scale(1.25);
+              i {
+                color: $white;
+              }
+            }
+            @include smallDesktop {
+              width: 30px;
+              height: 30px;
+            }
+            @include tablet {
+              width: 25px;
+              height: 25px;
+            }
+            @include mobileLarge {
+              width: 20px;
+              height: 20px;
+              font-size: 0.7rem;
+            }
+            i {
+              color: transparent;
+              font-size: 2rem;
+              @include tablet {
+                font-size: 1.5rem;
+              }
+              @include mobileLarge {
+                font-size: 1.5rem;
+                color: $white;
+              }
+            }
+          }
+          .added {
+            width: 45px;
+            height: 45px;
+            border: none;
+            margin: 2px 5px;
+            background-color: transparent;
+            z-index: 1;
+            cursor: default;
+            @include smallDesktop {
+              width: 30px;
+              height: 30px;
+            }
+            @include tablet {
+              width: 25px;
+              height: 25px;
+            }
+            @include mobileLarge {
+              width: 20px;
+              height: 20px;
+              font-size: 0.7rem;
+            }
+            i {
+              font-size: 2rem;
+              animation: rotateOnce 0.65s linear 1;
+              text-shadow: -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000,
+                0.5px -0.5px 0 #000, -0.5px -0.5px 0 #000;
+              @include tablet {
+                font-size: 1.5rem;
+              }
+              @include mobileLarge {
+                font-size: 1.5rem;
+              }
+            }
+          }
+        }
+      }
+    }
+    .stationInfoPlayingList {
+      display: flex;
+      position: relative;
+      justify-content: center;
+      width: calc((80% / 2) - 30px);
+      margin: 12.5px;
+      max-height: 150px;
+      border: 2.5px solid $black;
+      border-radius: 20px;
+      background-color: $playingYellow;
+      @include tablet {
+        width: calc((85% / 2) - 25px);
+      }
+      @include mobileLarge {
+        width: 100%;
+        height: 100px;
+        margin: 5px 10px;
+        background: transparent;
+        border: none;
+        border-radius: 0px;
+      }
+      &:hover {
+        .imageInfoContainer {
+          .buttonContainer {
+            .favourite {
+              i {
+                font-size: 2rem;
+                color: $grey;
+                -webkit-text-stroke-width: 1px;
+                -webkit-text-stroke-color: $black;
+                &:hover {
+                  transform: scale(1.15);
+                  color: $white;
+                  transition: 0.2s;
+                }
+              }
+            }
+          }
+        }
+      }
+      .playButtonDiv {
+        background: transparent;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+        cursor: default;
+      }
+      .imageInfoContainer {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 5px;
+        .information {
+          width: 50%;
+          @include tablet {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+          }
+          .stationName {
+            font-family: $bold;
+          }
+          p {
+            font-size: clamp(0.75rem, 0.6705rem + 0.3977vw, 1.625rem);
+            color: $black;
+            @include mobileLarge {
+              font-size: 1.5rem;
+              color: $yellow;
+            }
+          }
+        }
+        .imageList {
+          width: 25%;
+          margin: 0 15px;
+          display: flex;
+          align-content: center;
+          justify-content: center;
+          position: relative;
+          .icon {
+            margin: auto 0;
+            width: 70px;
+            height: auto;
+            max-height: 70px;
+            border-radius: 10px;
+            padding: 5px;
+            @include smallDesktop {
+              width: 50px;
+              height: auto;
+              max-height: 50px;
+            }
+            @include tablet {
+              width: 35px;
+              height: auto;
+              max-height: 35px;
+              font-size: 0.7rem;
+            }
+            @include mobileLarge {
+              width: 75px;
+              height: 75px;
+              max-height: 75px;
+            }
+          }
+          .blurred {
+            filter: blur(3px);
+            -webkit-filter: blur(3px);
+          }
+          .playingBars {
+            width: 60px;
+            height: 60px;
+            border: none;
+            border-radius: 10px;
+            background-color: $white;
+            background-image: url("../../assets/soundBars.gif");
+            background-size: 150px;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: inline-block;
+            // margin: auto;
+            padding: 5px;
+            margin: 0 auto;
+            align-self: center;
+            @include smallDesktop {
+              width: 50px;
+              height: 50px;
+              max-height: 50px;
+              background-size: 100px;
+            }
+            @include tablet {
+              width: 35px;
+              height: 35px;
+              max-height: 35px;
+              background-size: 65px;
+            }
+            @include mobileLarge {
+              width: 75px;
+              height: 75px;
+              max-height: 75px;
+            }
+          }
+        }
+        .buttonContainer {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .favourite {
+            width: 45px;
+            height: 45px;
+            border: none;
+            margin: 2px 5px;
+            background-color: transparent;
+            cursor: pointer;
+            z-index: 1;
+            @include smallDesktop {
+              width: 30px;
+              height: 30px;
+            }
+            @include tablet {
+              width: 25px;
+              height: 25px;
+            }
+            @include mobileLarge {
+              width: 20px;
+              height: 20px;
+              font-size: 0.7rem;
+            }
+            i {
+              color: transparent;
+              @include mobileLarge {
+                font-size: 1.5rem;
+                color: $white;
+              }
+            }
+          }
+          .added {
+            width: 45px;
+            height: 45px;
+            border: none;
+            margin: 2px 5px;
+            background-color: transparent;
+            cursor: default;
+            @include smallDesktop {
+              width: 30px;
+              height: 30px;
+            }
+            @include tablet {
+              width: 25px;
+              height: 25px;
+            }
+            @include mobileLarge {
+              width: 20px;
+              height: 20px;
+            }
+            i {
+              font-size: 2rem;
+              color: $darkYellow;
+              text-shadow: -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000,
+                0.5px -0.5px 0 #000, -0.5px -0.5px 0 #000;
+              animation: rotateOnce 0.65s linear;
+              @include tablet {
+                font-size: 1.5rem;
+              }
+              @include mobileLarge {
+                font-size: 1.5rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.listViewContainer {
+  background: rgb(211, 38, 49);
+  background: -moz-linear-gradient(
+    180deg,
+    rgba(211, 38, 49, 1) 0%,
+    rgba(29, 28, 34, 0.9850533963585434) 90%
+  );
+  background: -webkit-linear-gradient(
+    180deg,
+    rgba(211, 38, 49, 1) 0%,
+    rgba(29, 28, 34, 0.9850533963585434) 90%
+  );
+  background: linear-gradient(
+    180deg,
+    rgba(211, 38, 49, 1) 0%,
+    rgba(29, 28, 34, 0.9850533963585434) 90%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#d32631",endColorstr="#1d1c22",GradientType=1);
+}
+
+.returnBtn {
+  position: fixed;
+  bottom: 85px;
+  right: 50px;
+  transition: opacity 0.6s ease-in-out;
+  @include tablet {
+    bottom: 95px;
+    right: 20px;
+  }
+  @include mobileLarge {
+    bottom: 12.5px;
+    z-index: 4;
+  }
+  @include mobile {
+    bottom: 95px;
+    right: 15px;
+  }
+  .scrollToTop {
+    height: 50px;
+    width: 50px;
+    border-radius: 100%;
+    background-color: $ash;
+    color: $white;
+    font-size: 16px;
+    transition: 0.3s;
+    cursor: pointer;
+    @include tablet {
+      height: 35px;
+      width: 35px;
+    }
+    &:hover {
+      opacity: 0.8;
+      transform: scale(1.1);
+    }
+    &:hover + #topText {
+      display: block;
+      @include tablet {
+        display: none;
+      }
+    }
+    i {
+      font-size: 3rem;
+      @include tablet {
+        font-size: 2.2rem;
+      }
+    }
+  }
+  #topText {
+    color: $white;
+    position: absolute;
+    margin: 5px 0;
+    text-align: center;
+    font-size: 1.5rem;
+    display: none;
+  }
+}
+
+/////// animations
+///
+///
+///
+///
+
+@keyframes favourite {
+  0% {
+    transform: rotate(0deg) translate(0deg) scale(1);
+    color: $darkYellow;
+  }
+  45% {
+    transform: rotate(180deg) translate(360deg);
+  }
+  65% {
+    transform: rotate(360deg) translate(900deg) scale(1.05);
+  }
+  80% {
+    transform: rotate(540deg) translate(1080deg);
+  }
+  100% {
+    transform: rotate(720deg) translate(1280deg) scale(1);
+    color: $yellow;
+    text-shadow: -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000, 0.5px -0.5px 0 #000,
+      -0.5px -0.5px 0 #000;
+  }
+}
+
+@keyframes rotateOnce {
+  0% {
+    transform: rotate(0deg) scale(1);
+    color: $yellow;
+  }
+  60% {
+    transform: rotate(270deg) scale(1.25);
+    color: $brightYellow;
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+    color: $darkYellow;
+    text-shadow: -0.5px 0.5px 0 $white, 0.5px 0.5px 0 $white,
+      0.5px -0.5px 0 $white, -0.5px -0.5px 0 $white;
+  }
+}

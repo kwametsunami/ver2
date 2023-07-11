@@ -1,0 +1,299 @@
+@use "./variables" as *;
+@use "./mixins" as *;
+
+.leaflet-container {
+  width: 100%;
+  height: 100vh;
+  z-index: 0;
+  background: rgb(211, 38, 49);
+  background: -moz-linear-gradient(
+    180deg,
+    rgba(211, 38, 49, 1) 0%,
+    rgba(29, 28, 34, 0.9850533963585434) 90%
+  );
+  background: -webkit-linear-gradient(
+    180deg,
+    rgba(211, 38, 49, 1) 0%,
+    rgba(29, 28, 34, 0.9850533963585434) 90%
+  );
+  background: linear-gradient(
+    180deg,
+    rgba(211, 38, 49, 1) 0%,
+    rgba(29, 28, 34, 0.9850533963585434) 90%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#d32631",endColorstr="#1d1c22",GradientType=1);
+}
+
+.leaflet-popup-close-button {
+  transform: scale(1.5);
+  padding: 0 7px 0 0;
+  &:hover {
+    transform: scale(1.75);
+  }
+}
+
+.leaflet-control-zoom {
+  @include tablet {
+    display: none;
+  }
+}
+
+.leaflet-popup-content-wrapper {
+  background: $white;
+}
+
+.mapFilters {
+  position: fixed;
+  top: 0%;
+  left: 52.5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  background-image: linear-gradient(
+    to top,
+    rgba(255, 0, 0, 0),
+    rgba(215, 215, 215, 0.797)
+  );
+  border-radius: 0 0 35px 35px;
+  width: 600px;
+  margin-left: -300px;
+  padding: 12px;
+  @include smallDesktop {
+    width: 350px;
+    margin-left: -175px;
+  }
+  @include tablet {
+    width: 275px;
+    margin-left: 0px;
+    left: 200px;
+  }
+  @include mobileLarge {
+    visibility: hidden;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+    width: 100vw;
+  }
+  .textLoading {
+    margin: 20px 0 25px;
+  }
+  .returned {
+    font-size: clamp(1rem, 0.8182rem + 0.9091vw, 3rem);
+    text-align: center;
+    margin: 2px 0 15px;
+    color: $ash;
+    h3 {
+      margin: 0;
+    }
+    #amountReturnedMap,
+    #searchTerm {
+      color: $black;
+      font-family: $bold;
+    }
+    @include mobileLarge {
+      visibility: visible;
+      margin: 0 auto;
+      width: 200px;
+      word-wrap: break-word;
+      font-size: 2rem;
+    }
+  }
+  .topControls {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    align-items: center;
+    @include tablet {
+      flex-direction: column;
+    }
+    .filterButtonContainer {
+      .randomStation {
+        width: 50px;
+        padding: 10px 10px;
+        border-radius: 5px 0 0 5px;
+        border-right: 0.5px solid $black;
+        @include smallDesktop {
+          width: 45px;
+        }
+        @include tablet {
+          width: 35px;
+        }
+        &:hover {
+          background: $grey;
+        }
+        i {
+          font-size: clamp(1.125rem, 1.0227rem + 0.5114vw, 2.25rem);
+          color: $red;
+        }
+      }
+      .listButton {
+        width: 50px;
+        padding: 10px 10px;
+        border-radius: 0 5px 5px 0;
+        border-left: 0.5px solid $black;
+        @include smallDesktop {
+          width: 45px;
+        }
+        @include tablet {
+          width: 35px;
+        }
+        &:hover {
+          background: $grey;
+        }
+        i {
+          font-size: clamp(1.125rem, 1.0227rem + 0.5114vw, 2.25rem);
+          color: $red;
+        }
+      }
+    }
+    .selectDropdown {
+      select {
+        padding: 10px 10px;
+        font-size: clamp(0.625rem, 0.5455rem + 0.3977vw, 1.5rem);
+        color: $black;
+        background-color: $white;
+        border: 2px solid $black;
+        border-radius: 5px;
+        @include tablet {
+          width: 70px;
+        }
+      }
+    }
+  }
+}
+
+.actualMap {
+  display: flex;
+  justify-content: flex-end;
+  @include mobileLarge {
+    height: 100%;
+    width: 100vw;
+  }
+  .leaflet-popup-content {
+    margin: 15px 20px;
+    .stationDetails {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      .stationText {
+        .stationCountry {
+          text-transform: capitalize;
+        }
+        p {
+          color: $black;
+          margin: 5px 0;
+        }
+        #stationNameMap {
+          font-family: $bold;
+        }
+      }
+      .icon {
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        margin: 0 auto;
+        width: 100%;
+        max-height: 100px;
+        max-width: 100px;
+        border-radius: 5px;
+      }
+      .buttonContainer {
+        display: flex;
+        justify-content: center;
+        .infoButton {
+          width: 45px;
+          height: 45px;
+          border-radius: 5px 0 0 5px;
+          border-right: 0.5px solid $black;
+          color: #d64b4b;
+          background-color: $white;
+          align-self: center;
+          font-size: 1.5rem;
+          &:hover {
+            i {
+              transform: scale(1.25);
+              transition: 0.2s;
+            }
+          }
+          i {
+            text-shadow: -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000,
+              0.5px -0.5px 0 #000, -0.5px -0.5px 0 #000;
+          }
+        }
+        .infoButtonPlaying {
+          width: 45px;
+          height: 45px;
+          border-radius: 5px 0 0 5px;
+          border-right: 0.5px solid $black;
+          background-color: $white;
+          font-family: "Poppins", sans-serif;
+          background-image: url("../../assets/soundBars.gif");
+          background-size: 100px;
+          background-repeat: no-repeat;
+          background-position: center;
+          display: inline-block;
+          align-self: center;
+          cursor: default;
+        }
+        .favourite {
+          width: 45px;
+          height: 45px;
+          border-radius: 0 5px 5px 0;
+          border-left: 0.5px solid $black;
+          color: #d64b4b;
+          background-color: $white;
+          align-self: center;
+          font-size: 1.5rem;
+          &:hover {
+            i {
+              transform: scale(1.25);
+              transition: 0.2s;
+            }
+          }
+          i {
+            color: $yellow;
+            font-size: 1.5rem;
+          }
+        }
+        .added {
+          width: 45px;
+          height: 45px;
+          border-radius: 0 5px 5px 0;
+          border-left: 0.5px solid $black;
+          background-color: $white;
+          font-size: 1.5rem;
+          cursor: default;
+          i {
+            color: $yellow;
+            text-shadow: -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000,
+              0.5px -0.5px 0 #000, -0.5px -0.5px 0 #000;
+            animation: rotateOnce 0.65s linear 1;
+          }
+        }
+      }
+    }
+  }
+}
+
+////////animations
+
+@keyframes rotateOnce {
+  0% {
+    transform: rotate(0deg) scale(1);
+    color: $yellow;
+  }
+  60% {
+    transform: rotate(270deg) scale(1.25);
+    color: $brightYellow;
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+    color: $darkYellow;
+    text-shadow: -0.5px 0.5px 0 $white, 0.5px 0.5px 0 $white,
+      0.5px -0.5px 0 $white, -0.5px -0.5px 0 $white;
+  }
+}

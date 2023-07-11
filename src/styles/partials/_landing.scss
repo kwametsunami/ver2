@@ -1,0 +1,307 @@
+@use "./variables" as *;
+@use "./mixins" as *;
+
+.landing {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  overflow: hidden;
+  .landingInfo {
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  .landingNav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 10px 50px 0 50px;
+    padding-top: 10px;
+    @include mobileLarge {
+      margin: 5px 20px 0 20px;
+    }
+    .navItems {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      .userName {
+        margin: 0 5px;
+        cursor: default;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        i {
+          margin: 0;
+          font-size: clamp(0.875rem, 0.75rem + 0.625vw, 2.25rem);
+          color: $white;
+          border-radius: 100px;
+          padding: 6px 15px;
+          transform: translateY(-1px);
+          @include mobileLarge {
+            padding: 3px 10px 3px 0px;
+          }
+        }
+        p {
+          font-size: clamp(0.875rem, 0.75rem + 0.625vw, 2.25rem);
+          color: $white;
+          margin: 0;
+          @include mobileLarge {
+            font-size: 1.5rem;
+            word-wrap: break-word;
+          }
+        }
+      }
+      #hideUser {
+        visibility: hidden;
+      }
+      .navButtons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 5px;
+        .loginBtn {
+          margin: 0 5px;
+          width: 75px;
+          font-size: clamp(0.875rem, 0.75rem + 0.625vw, 2.25rem);
+          padding: 5px 10px;
+          background: transparent;
+          color: $white;
+          border: none;
+          &:hover {
+            color: $yellow;
+            transition: 0.3s;
+          }
+          @include mobileLarge {
+            width: 45px;
+            font-size: 2rem;
+            margin: 0 20px;
+          }
+          @include mobile {
+            width: 30px;
+          }
+          @include small {
+            width: 25px;
+          }
+        }
+        .logoutBtn {
+          margin: 0 5px;
+          width: 75px;
+          font-size: clamp(0.875rem, 0.75rem + 0.625vw, 2.25rem);
+          padding: 5px 10px;
+          background: transparent;
+          color: $white;
+          border: none;
+          &:hover {
+            color: $yellow;
+            transition: 0.3s;
+          }
+          @include mobileLarge {
+            width: 45px;
+            font-size: 2rem;
+            margin: 0 20px;
+          }
+          @include mobile {
+            width: 30px;
+          }
+          @include small {
+            width: 25px;
+          }
+        }
+        .aboutBtn {
+          margin: 0 5px;
+          width: 75px;
+          font-size: clamp(0.875rem, 0.75rem + 0.625vw, 2.25rem);
+          padding: 5px 10px;
+          background: transparent;
+          color: $white;
+          border: none;
+          &:hover {
+            color: $yellow;
+            transition: 0.3s;
+          }
+          @include mobileLarge {
+            width: 45px;
+            font-size: 2rem;
+            margin: 0 20px;
+          }
+          @include mobile {
+            width: 30px;
+          }
+          @include small {
+            width: 25px;
+          }
+        }
+      }
+    }
+  }
+  #vanish {
+    transition: 0.5s;
+  }
+  .centerContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: $red;
+    .centerText {
+      margin: 100px 0 0;
+      text-align: center;
+      @include mobileLarge {
+        margin: 115px 0 0;
+      }
+      .title {
+        color: $white;
+        font-family: $bold;
+        transition: 0.9s;
+        cursor: default;
+        &:hover {
+          color: $yellow;
+        }
+        @include mobile {
+          font-size: 10rem;
+        }
+      }
+      .greeting {
+        margin: 2px 0 10px;
+        color: $white;
+        cursor: default;
+        @include mobileLarge {
+          font-size: 2rem;
+        }
+      }
+    }
+    .searchForm {
+      display: flex;
+      justify-content: center;
+      width: 35%;
+      @include tablet {
+        width: 50%;
+      }
+      @include mobileLarge {
+        width: 70%;
+      }
+      @include mobile {
+        width: 85%;
+      }
+      .searchContainer {
+        width: 100%;
+        margin: 12.5px 0;
+        .checkBox {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 10px;
+          label {
+            font-size: clamp(0.75rem, 0.6136rem + 0.6818vw, 2.25rem);
+            color: $white;
+            @include mobileLarge {
+              font-size: 1.2rem;
+            }
+          }
+          input {
+            margin: 2px 5px 0;
+            width: 12.5px;
+            height: 12.5px;
+            padding: 0;
+            @include mobileLarge {
+              width: 9px;
+              height: 9px;
+            }
+            @include mobile {
+              width: 11px;
+              height: 11px;
+            }
+          }
+        }
+        .searchInner {
+          display: flex;
+          text-align: center;
+          input,
+          input::placeholder {
+            font-size: clamp(0.9375rem, 0.8523rem + 0.4261vw, 1.875rem);
+          }
+          .landingSearch {
+            touch-action: manipulation;
+            user-select: text;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -o-user-drag: none;
+            -webkit-user-select: auto !important;
+            -khtml-user-select: auto !important;
+            -moz-user-select: auto !important;
+            -o-user-select: auto !important;
+            -ms-user-select: auto !important;
+            user-select: auto !important;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
+          }
+          .searchButton {
+            background-color: $yellow;
+            border-radius: 0 5px 5px 0;
+            width: 100px;
+            border: 2px solid $black;
+            &:hover {
+              transition: 0.3s;
+              background-color: $darkYellow;
+              i {
+                transition: 0.3s;
+                transform: scale(1.15);
+              }
+            }
+            i {
+              color: $black;
+              font-size: 2rem;
+              @include mobileLarge {
+                font-size: 1.5rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  #backgroundBlur {
+    animation: quickScaleDown 0.4s linear forwards;
+  }
+  .contentBack {
+    opacity: 0;
+    transform: scale(0.8);
+    animation: comeBack 0.3s linear forwards;
+  }
+}
+
+@keyframes quickScaleDown {
+  0% {
+    transform: scale(1) translateY(0px);
+    filter: blur(0px);
+    -webkit-filter: blur(0px);
+  }
+  80% {
+    transform: scale(1.02) translateY(-10px);
+    filter: blur(0px);
+    -webkit-filter: blur(0px);
+  }
+  100% {
+    transform: scale(0.55) translateY(30px);
+    filter: blur(45px);
+    -webkit-filter: blur(45px);
+  }
+}
+
+@keyframes comeBack {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

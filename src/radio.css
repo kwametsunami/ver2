@@ -1,0 +1,86 @@
+.radioPlayer {
+  border: 3px solid black;
+  border-radius: 25px;
+}
+
+.rhap_additional-controls {
+  display: none;
+}
+
+.rhap_total-time {
+  display: none;
+}
+
+.rhap_main {
+  background-color: #424242;
+}
+
+.rhap_main-controls {
+  position: relative;
+  left: 22.5%;
+}
+
+.rhap_container {
+  background-color: #424242;
+  padding: 12.5px;
+  border-radius: 20px;
+}
+
+.rhap_progress-indicator {
+  background-color: #d64b4b;
+  border: 2px solid #1e2021;
+}
+
+.rhap_progress-bar {
+  background-color: #ede8e7;
+  /* display */
+}
+
+#rhap_current-time {
+  color: #ede8e7;
+  display: inline;
+}
+
+.rhap_button-clear {
+  color: #ede8e7;
+}
+
+.rhap_play-pause-button {
+  position: relative;
+  left: -50%;
+}
+
+.rhap_volume-indicator {
+  background-color: #d64b4b;
+  border: 2px solid #1e2021;
+}
+
+.rhap_horizontal-reverse {
+  margin: 0;
+}
+
+.rhap_volume-bar-area {
+  display: inherit;
+}
+
+.rhap_progress-section {
+  display: inline-flex;
+}
+
+@media (max-width: 850px) {
+  .rhap_horizontal-reverse {
+    margin: 0 auto;
+  }
+  .rhap_volume-bar-area {
+    display: none;
+  }
+  #rhap_current-time {
+    display: none;
+  }
+  .rhap_progress-bar {
+    display: none;
+  }
+  .rhap_progress-section {
+    display: none;
+  }
+}/*# sourceMappingURL=radio.css.map */

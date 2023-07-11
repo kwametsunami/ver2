@@ -1,0 +1,37 @@
+@use "./variables" as *;
+@use "./mixins" as *;
+
+.loadingContainer {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadingPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin-right: 165px;
+  margin-bottom: 155px;
+  @include mobileLarge {
+    margin-right: 0;
+    margin-bottom: 0;
+  }
+}
+
+.loadingText {
+  width: 225px;
+  text-align: center;
+}
+
+h2 {
+  color: $white;
+}
+
+.beatloader {
+  margin-top: 200px;
+}

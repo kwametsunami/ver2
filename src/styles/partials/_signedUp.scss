@@ -1,0 +1,102 @@
+@use "./variables" as *;
+
+@use "./variables" as *;
+
+.registerSuccess {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .musicNotes {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    .note {
+      width: 50px;
+      height: 40px;
+      background: $blue;
+      border-radius: 50%;
+      position: relative;
+      &:last-of-type {
+        background: $green;
+      }
+    }
+    .musicA {
+      margin-left: -30px;
+      animation: 2s alternate infinite upDown;
+    }
+    .musicB {
+      top: -20px;
+      animation: 2s alternate infinite upDown;
+    }
+
+    .musicC {
+      background: $yellow;
+      top: 40px;
+      animation: 2s ease-in-out alternate 3s infinite upDown;
+    }
+
+    .musicD {
+      top: 15px;
+      animation: 2s ease-in alternate 1.5s infinite upDown;
+    }
+    .musicUp {
+      position: absolute;
+      width: 10px;
+      height: 100px;
+      background: inherit;
+      bottom: 50%;
+      right: 0;
+    }
+
+    .musicSide {
+      background: inherit;
+      position: absolute;
+      top: -80px;
+      right: -60%;
+      height: 10px;
+      width: 40px;
+    }
+
+    .musicLong {
+      width: 83.5px;
+      right: -143%;
+      top: -93px;
+      transform: rotate(161deg);
+      border-radius: 20px;
+    }
+
+    .musicDown {
+      top: -60px;
+    }
+  }
+  .loginLoadingText {
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .loginGreeting {
+      margin-bottom: 25px;
+      color: $white;
+    }
+  }
+}
+
+@keyframes upDown {
+  0% {
+    transform: translateY(0px);
+  }
+  20% {
+    transform: translateY(-8px);
+  }
+  60% {
+    transform: translateY(8px);
+  }
+  90% {
+    transform: translateY(-2.5px);
+  }
+}
